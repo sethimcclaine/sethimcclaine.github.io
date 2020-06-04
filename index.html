@@ -1,1 +1,48 @@
-test
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>jquery.rss example</title>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+          integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-rss/3.3.0/jquery.rss.min.js"></script>
+
+        <script>
+          jQuery(function($) {
+            $("#rss-feeds").rss("http://feeds.feedburner.com/premiumpixels", {
+              limit: 100,
+              layoutTemplate: '<div><ul id="content" >{entries} </ul></div>',
+              entryTemplate: '<li class="feed-list {date}" ><a href="{url}" >{title}</a><p class="feed-date">{date}</p><p class="feed-body">{body}</p></li>',
+              dateFormat: "MMMM Do, YYYY"
+            });
+            $('#filter').click(() => {
+              const year = $('#year').val();
+              if(year === 'year') {
+                $('.feed-list').show();
+              } else {
+                $('.feed-list').hide();
+                debugger;
+                $('.'+year).show();
+              }
+            });
+          });
+        </script>
+      </head>
+      <body>
+        <form id="feed-filter" action="">
+          <fieldset>
+            <div class="year-filter margin-bottom-6">
+              <label for="year"><b>Archives:</b></label>
+              <select name="year" id="year">
+                <option value="year">Year</option>
+                <option value="2015">2015</option>
+                <option value="2013">2013</option>
+              </select>
+            </div>
+            <input id="filter" type="button" value="Submit">
+          </fieldset>
+        </form>
+        <div id="rss-feeds"></div>
+      </body>
+    </html>
